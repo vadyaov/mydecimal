@@ -27,6 +27,9 @@ int find_first_rbit(s21_decimal num);
 
 int balance(s21_decimal *value_1, s21_decimal *value_2);
 int scale_low(s21_decimal *dec, unsigned int val);
+int scale_up(s21_decimal *dec, unsigned int val);
+s21_decimal mul10(s21_decimal in);
+s21_decimal div10(s21_decimal in);
 
 // shifts
 int shiftleft(s21_decimal *a);

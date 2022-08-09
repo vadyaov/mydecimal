@@ -33,20 +33,3 @@ int shiftright(s21_decimal *a) {
     return below;
 }
 
-// int main () {
-//     int a = 395868579, b = 0;
-//     s21_decimal dst;
-//     s21_from_int_to_decimal(a, &dst);
-//     print_decimal(dst);
-//     for(int i = 0; i < 64; i++) {
-//         shiftleft(&dst);
-//         print_decimal(dst);
-//     }
-//     for(int i = 0; i < 66; i++) {
-//         shiftright(&dst);
-//         print_decimal(dst);
-//     }
-//     s21_from_decimal_to_int(dst, &b);
-//     printf("%d\n", b);
-//     return 0;
-// }

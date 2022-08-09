@@ -37,6 +37,10 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             set_sign(result, 1);
             print_decimal(*result);
         }
+        // если произошло переполнение из-за дробной части (экспоненты не нулевые и статус 1)
+        // if (status && get_dec_scale(value_1) && get_dec_scale(value_2)) {
+        //     // что то типо bank_round
+        // }
         set_dec_scale(scale, result);
         if (is_zero_mant(*result)) set_sign(result, 0);
     } else {

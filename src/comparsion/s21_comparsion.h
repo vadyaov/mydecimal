@@ -1,5 +1,4 @@
 #include "../s21_decimal.h"
-#include "../helpers/s21_helpers.h"
 
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2);
 int s21_is_not_equal(s21_decimal value_1, s21_decimal value_2);

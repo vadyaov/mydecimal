@@ -9,7 +9,6 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
             int sign = __builtin_signbit(src);
             src = fabsf(src);
             int exp = get_float_exp(src);
-            int scale = 0;
             if (exp >= -94 && exp <= 95) {
                 init_decimal(dst);
                 if (exp >= 23) {
@@ -25,7 +24,6 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
                     set_dec_scale(28 - exp + 1, dst);
                 }
                 if (sign) set_sign(dst, 1);
-                // print_decimal(*dst);
             } else {
                 if (exp < -94) init_decimal(dst);
                 convert_error = CONVERT_ERROR;
@@ -34,28 +32,5 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     } else {
         convert_error = CONVERT_ERROR;
     }
+    return convert_error;
 }
-
-// int main() {
-//     float a = pow(2, 35) - 1;
-//     float b = 235.235;
-//     printf("a = %.28f\n", a);
-//     printf("b = %.28f\n", b);
-//     s21_decimal aa, bb;
-//     s21_from_float_to_decimal(a, &aa);
-//     s21_from_float_to_decimal(b, &bb);
-//     print_decimal(aa);
-//     print_decimal(bb);
-//     s21_from_decimal_to_float(aa, &a);
-//     s21_from_decimal_to_float(bb, &b);
-//     printf("a = %.28f\n", a);
-//     printf("b = %.28f\n", b);
-//     balance(&aa, &bb);
-//     print_decimal(aa);
-//     print_decimal(bb);
-//     s21_from_decimal_to_float(aa, &a);
-//     s21_from_decimal_to_float(bb, &b);
-//     printf("a = %.28f\n", a);
-//     printf("b = %.28f\n", b);
-//     return 0;
-// }

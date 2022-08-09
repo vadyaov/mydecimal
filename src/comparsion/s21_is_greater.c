@@ -27,6 +27,7 @@ int s21_is_greater(s21_decimal value_1, s21_decimal value_2) {
         } else {
             balance(&value_1, &value_2);
             result = simple_greater(value_1, value_2);
+            if (sign1) result = !result;
         }
     }
     return result;

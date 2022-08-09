@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define S21_HUGE_VAL (__builtin_inff())
 /**
   * returns float NaN value
@@ -49,5 +48,11 @@ typedef enum {
 enum dec_bits {LOW, MID, HIGH, EXT};
 
 enum sign {POSITIVE, NEGATIVE};
+
+#include "arithmetic/s21_arithmetic.h"
+#include "converters/s21_converters.h"
+#include "comparsion/s21_comparsion.h"
+#include "helpers/s21_helpers.h"
+#include "other/s21_other.h"
 
 #endif // S21_DECIMAL_H_

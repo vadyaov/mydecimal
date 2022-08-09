@@ -75,5 +75,25 @@ int simple_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     return SUCCESS;
 }
 
-//   00011000 00111011 11011010 11000110  10101110 10011011 11000001 11001000  11001100 11001100 11001100 11001100
-// + 01001010 11110110 10010111 01000001  01110001 00110101 00001101 10000010  10000000 00000000 00000000 00000000
+// функция целочисленного деления, возвращает остаток
+// запомнили знаки и скейлы
+s21_decimal int_div(s21_decimal value_1, s21_decimal value_2) {
+    s21_decimal res;
+    s21_decimal cpy2 = value_2;
+    s21_decimal tmp = ZERO_DECIMAL;
+    value_1.bits[EXT] = value_2.bits[EXT] = 0;
+    if (simple_less(value_1, value_2)) {
+        return value_1;
+    } else if (simple_equal(value_1, value_2)) {
+        return tmp;
+    } else {
+        while ((simple_greater(value_1, value_2) || simple_equal(value_1, value_2)) && !isBit(value_2.bits[HIGH], 95)) {
+            shiftleft(&value_2);
+        }
+        if (simple_greater(value_2, value_1))
+            shiftright(&value_2);
+        simple_sub(value_1, value_2, &tmp);
+        res = int_div(tmp, cpy2);
+    }
+    return res;
+}
