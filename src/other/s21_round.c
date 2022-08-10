@@ -9,13 +9,11 @@ int s21_round(s21_decimal value, s21_decimal *result) {
         s21_decimal one = {{1, 0, 0, 0}, 0};
         s21_decimal o5 = {{5, 0, 0, 0}, 0};
         set_dec_scale(1, &o5);
-
         s21_mod(value, one, &point_part);
         s21_truncate(value, result);
         set_sign(&point_part, 0);
-
         balance(&point_part, &o5);
-        if (simple_greater(point_part, o5) || simple_equal(point_part, o5)) {  // numbers with .5 part after point work bad because of float_to_decimal :(
+        if (simple_greater(point_part, o5) || simple_equal(point_part, o5)) {  // numbers with .5 part after point work bad because of mod or float_to_decimal :(
             simple_add(*result, one, result);
         }
         set_sign(result, sign);
