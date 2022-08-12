@@ -21,9 +21,10 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
                     char bits[129] = {'\0'};
                     exp = integer_part_count(srctmp);
                     printf("exp = %d\n", exp);
-                    get_bit_string(srctmp, bits, exp);
+                    int scale = get_bit_string(srctmp, bits, exp);
+                    printf("scale = %d\n", scale);
                     set_bits_from_string(bits, dst);
-                    set_dec_scale(28 - exp - 1, dst);
+                    set_dec_scale(scale, dst);
                 }
                 if (sign) set_sign(dst, 1);
             } else {

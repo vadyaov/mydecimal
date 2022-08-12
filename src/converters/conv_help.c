@@ -46,7 +46,7 @@ void set_invisible(s21_decimal *dst, int pos) {
 //     return 0;
 // }
 
-void get_bit_string(long double res, char *bits, int exponent) {
+int get_bit_string(long double res, char *bits, int exponent) {
     // printf("%.30Lf\n", res * powl(10.0L, (long double)(25)));
     int mn = 0;
     if (exponent == 1) mn = 28;
@@ -61,6 +61,7 @@ void get_bit_string(long double res, char *bits, int exponent) {
         else
             bits[i] = '0';
     }
+    return mn;
 }
 
 void set_bits_from_string(char *bits, s21_decimal *result) {
