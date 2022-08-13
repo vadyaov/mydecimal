@@ -14,10 +14,16 @@ int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *result, s2
     int begin = 0, j = 0;
     int position1 = find_first_rbit(*value_1), position2 = find_first_rbit(*value_2);
     printf("pos1 = %d  pos2 = %d\n", position1, position2);
+    int scale1 = get_dec_scale(*value_1), scale2 = get_dec_scale(*value_2);
+    scale_low(value_1, scale1 - 16);
+    scale_low(value_2, scale2 - 16);
+    print_decimal(*value_1);
+    print_decimal(*value_2);
     // даша, привет. j в цикле всегда 0, нигде нет j++;
     /* еще переменная begin может расти вплоть до 95(макс), функция isBit в случае когда
        begin > 31 работает некорректно */
     while (begin <= position2) {
+        //printf("here3\n");
         s21_decimal cat;
         init_decimal(&cat);
         int bit = isBit(value_2->bits[j], begin);
@@ -26,11 +32,15 @@ int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *result, s2
             cpy_decimal(*value_1, &cat);
             int count = begin;
             while(count-- > 0) {
+                //printf("here4\n");
                 shiftleft(&cat);
             }
             status = simple_add(*sum, cat, sum);
         }
         begin++;
+        if (begin > 31 && j == 0) j++;
+        else if 
+            (begin > 63 && j == 1) j++;
     }
     return status;
 }
@@ -40,6 +50,7 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_decimal sum;
     init_decimal(&sum);
     init_decimal(result);
+
     if (!is_zero_mant(value_1) && !is_zero_mant(value_2)) {
         if (s21_is_greater(value_1, value_2)) {
             status = norm_mul(&value_1, &value_2, result, &sum);
