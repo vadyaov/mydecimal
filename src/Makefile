@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -c #-Wall -Werror -Wextra -std=c11 -pedantic
+CFLAGS = -c -Wall -Werror -Wextra -std=c11 -pedantic
 SOURCES = arithmetic/*.c comparsion/*.c converters/*.c helpers/*.c other/*.c
 
 

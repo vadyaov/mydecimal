@@ -9,7 +9,7 @@ int balance_sign_mul(s21_decimal *value_1, s21_decimal *value_2) {
     return status;
 }
 
-int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *result, s21_decimal *sum) {
+int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *sum) {
     int status = 0;
     int begin = 0, j = 0;
     int position1 = find_first_rbit(*value_1), position2 = find_first_rbit(*value_2);
@@ -42,9 +42,9 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     init_decimal(result);
     if (!is_zero_mant(value_1) && !is_zero_mant(value_2)) {
         if (s21_is_greater(value_1, value_2)) {
-            status = norm_mul(&value_1, &value_2, result, &sum);
+            status = norm_mul(&value_1, &value_2, &sum);
         } else
-            status = norm_mul(&value_2, &value_1, result, &sum);
+            status = norm_mul(&value_2, &value_1, &sum);
         cpy_decimal(sum, result);
         result->bits[3] = 0;
         set_dec_scale(get_dec_scale(value_1) + get_dec_scale(value_2), result);

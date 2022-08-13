@@ -47,12 +47,11 @@ void set_invisible(s21_decimal *dst, int pos) {
 // }
 
 int get_bit_string(long double res, char *bits, int exponent) {
-    // printf("%.30Lf\n", res * powl(10.0L, (long double)(25)));
     int mn = 0;
-    if (exponent == 1) mn = 28;
+    if (exponent == 1 && !(unsigned int)res) mn = 28;
     else mn = 28 - exponent - 1;
     res *= powl(10.0L, (long double)(mn));
-    printf("RES = %Lf\n", res);
+    // printf("RES = %Lf\n", res);
     res = roundl(res);
     for (int i = 0; res > 1e-6; i++) {
         res = floorl(res) / 2;
