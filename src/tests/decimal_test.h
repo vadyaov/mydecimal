@@ -11,8 +11,10 @@
 
 // test helpers
 int get_rand_int(int min, int max);
+s21_decimal random_decimal(int dec_size, int exp_size);
 
 // Suites
 Suite *s21_from_int_to_decimal_test();
+Suite *s21_from_decimal_to_int_test();
 
 #endif  // SRC_TESTS_DECIMAL_TEST_H_

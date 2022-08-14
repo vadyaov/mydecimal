@@ -2,7 +2,7 @@
 
 int main() {
     int no_failed1 = 0;
-    // int no_failed2 = 0;
+    int no_failed2 = 0;
     // int no_failed3 = 0;
     // int no_failed4 = 0;
     // int no_failed5 = 0;
@@ -17,9 +17,9 @@ int main() {
     // int no_failed14 = 0;
     // int no_failed15 = 0;
 
-    Suite *s1/*, *s2, *s3, *s4, *s5, *s6, *s7, *s8, *s9, *s10, *s11, *s12,
+    Suite *s1, *s2/*, *s3, *s4, *s5, *s6, *s7, *s8, *s9, *s10, *s11, *s12,
                    *s13, *s14, *s15*/;
-    SRunner *runner1/*, *runner2, *runner3, *runner4, *runner5, *runner6, *runner7, *runner8,
+    SRunner *runner1, *runner2/*, *runner3, *runner4, *runner5, *runner6, *runner7, *runner8,
             *runner9, *runner10, *runner11, *runner12, *runner13, *runner14, *runner15*/;
 
     s1 = s21_from_int_to_decimal_test();
@@ -28,14 +28,14 @@ int main() {
     srunner_run_all(runner1, CK_NORMAL);
     no_failed1 = srunner_ntests_failed(runner1);
     srunner_free(runner1);
-/*
-    s2 = s21_Suite_fabs();
+
+    s2 = s21_from_decimal_to_int_test();
     runner2 = srunner_create(s2);
     srunner_set_fork_status(runner2, CK_NOFORK);
     srunner_run_all(runner2, CK_NORMAL);
     no_failed2 = srunner_ntests_failed(runner2);
     srunner_free(runner2);
-
+/*
     s3 = s21_Suite_exp();
     runner3 = srunner_create(s3);
     srunner_set_fork_status(runner3, CK_NOFORK);
@@ -127,7 +127,7 @@ int main() {
     no_failed15 = srunner_ntests_failed(runner15);
     srunner_free(runner15);
 */
-    int failures = (!no_failed1 /*&& !no_failed2 && !no_failed3 && !no_failed4 && !no_failed5 && !no_failed6
+    int failures = (!no_failed1 && !no_failed2/* && !no_failed3 && !no_failed4 && !no_failed5 && !no_failed6
                     && !no_failed7 && !no_failed8 && !no_failed9 && !no_failed10 && !no_failed11
                     && !no_failed12 && !no_failed13 && !no_failed14 && !no_failed15*/) ? 0 : 1;
     return (failures == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
