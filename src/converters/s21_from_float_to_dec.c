@@ -17,13 +17,14 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
                     shift_mant_left(dst, exp - 23);
                 } else {
                     long double srctmp = (long double)src;
-                    printf("srtcmp = %.30Lf\n", srctmp);
+                    // printf("srtcmp = %.30Lf\n", srctmp);
                     char bits[129] = {'\0'};
                     exp = integer_part_count(srctmp);
-                    printf("exp = %d\n", exp);
-                    get_bit_string(srctmp, bits, exp);
+                    // printf("exp = %d\n", exp);
+                    int scale = get_bit_string(srctmp, bits, exp);
+                    // printf("scale = %d\n", scale);
                     set_bits_from_string(bits, dst);
-                    set_dec_scale(28 - exp - 1, dst);
+                    set_dec_scale(scale, dst);
                 }
                 if (sign) set_sign(dst, 1);
             } else {
@@ -36,3 +37,25 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     }
     return convert_error;
 }
+
+// int s21_from_float_to_decimal(float src, s21_decimal *dst) {
+//     int convert_error = SUCCESS;
+//     if (dst) {
+//         init_decimal(dst);
+//         int new = (int)src;
+//         int i = 0;
+//         if (src < 0) {
+//             set_sign(dst, NEGATIVE);
+//             src *= -1;
+//         }
+//         while (src - ((float)new / (int)(pow(10, i))) != 0) {
+//             i++;
+//             new = src * (int)(pow(10, i));
+//         }
+//         dst->bits[LOW] = new;
+//         set_dec_scale(i, dst);
+//     } else {
+//         convert_error = FAIL;
+//     }
+//     return convert_error;
+// }

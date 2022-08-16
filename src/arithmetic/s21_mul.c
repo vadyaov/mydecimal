@@ -9,11 +9,13 @@ int balance_sign_mul(s21_decimal *value_1, s21_decimal *value_2) {
     return status;
 }
 
-int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *result, s21_decimal *sum) {
+int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *sum) {
     int status = 0;
     int begin = 0, j = 0;
-    int position1 = find_first_rbit(*value_1), position2 = find_first_rbit(*value_2);
-    printf("pos1 = %d  pos2 = %d\n", position1, position2);
+    int /*position1 = find_first_rbit(*value_1)*/ position2 = find_first_rbit(*value_2);
+    int scale1 = get_dec_scale(*value_1), scale2 = get_dec_scale(*value_2);
+    scale_low(value_1, scale1 - 10);
+    scale_low(value_2, scale2 - 10);
     // даша, привет. j в цикле всегда 0, нигде нет j++;
     /* еще переменная begin может расти вплоть до 95(макс), функция isBit в случае когда
        begin > 31 работает некорректно */
@@ -21,7 +23,6 @@ int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *result, s2
         s21_decimal cat;
         init_decimal(&cat);
         int bit = isBit(value_2->bits[j], begin);
-        printf("bit = %d\n", bit);
         if (bit) {
             cpy_decimal(*value_1, &cat);
             int count = begin;
@@ -31,9 +32,30 @@ int norm_mul(s21_decimal *value_1, s21_decimal *value_2, s21_decimal *result, s2
             status = simple_add(*sum, cat, sum);
         }
         begin++;
+        if (begin > 31 && j == 0) j++;
+        else if 
+            (begin > 63 && j == 1) j++;
     }
     return status;
 }
+
+int check_scale(s21_decimal value_1, s21_decimal value_2) {
+    int status = 0, scale1 = get_dec_scale(value_1), scale2 = get_dec_scale(value_2);
+    if ((scale1 > 28) || (scale2 > 28)) status = 1;
+    return status;
+}
+
+int check_type(s21_decimal value_1, s21_decimal value_2) {
+    int status = 0;
+    return status;
+}
+
+int check_adekvat_value(s21_decimal value_1, s21_decimal value_2) {
+    int status = 0;
+    status = check_scale(value_1, value_2) + check_type(value_1, value_2);
+    return status;
+}
+
 
 int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int status = 0, status_negative = balance_sign_mul(&value_1, &value_2);
@@ -42,9 +64,9 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     init_decimal(result);
     if (!is_zero_mant(value_1) && !is_zero_mant(value_2)) {
         if (s21_is_greater(value_1, value_2)) {
-            status = norm_mul(&value_1, &value_2, result, &sum);
+            status = norm_mul(&value_1, &value_2, &sum);
         } else
-            status = norm_mul(&value_2, &value_1, result, &sum);
+            status = norm_mul(&value_2, &value_1, &sum);
         cpy_decimal(sum, result);
         result->bits[3] = 0;
         set_dec_scale(get_dec_scale(value_1) + get_dec_scale(value_2), result);
