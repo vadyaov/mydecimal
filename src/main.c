@@ -20,7 +20,7 @@ int main () {
     s21_from_decimal_to_float(b, &B);
     printf("%.30f %.30f\n", A, B);
     s21_decimal result = ZERO_DECIMAL;
-    s21_mod(a, b, &result);
+    s21_mul(a, b, &result);
     print_decimal(result);
     float res;
     s21_from_decimal_to_float(result, &res);
