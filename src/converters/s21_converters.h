@@ -12,6 +12,6 @@ void shift_mant_right(s21_decimal *dst);
 void shift_mant_left(s21_decimal *dst, int count);
 void set_invisible(s21_decimal *dst, int pos);
 // int find_first_rbit(s21_decimal num);
-void get_bit_string(long double res, char *bits, int exponent);
+int get_bit_string(long double res, char *bits, int exponent);
 void set_bits_from_string(char *bits, s21_decimal *result);
 int integer_part_count(long double num);
