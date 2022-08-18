@@ -45,32 +45,73 @@ int check_scale(s21_decimal value_1, s21_decimal value_2) {
     return status;
 }
 
-int check_type(s21_decimal value_1, s21_decimal value_2) {
-    int status = 0;
+void mul_neadekvat_value(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    if (value_1.type == S21_INF) {
+        if (value_2.type == S21_INF) result->type = S21_INF;
+        else if (value_2.type == S21_NORMAL && !check_sign(value_2)) result->type = S21_INF;
+        else if (value_2.type == S21_NORMAL && check_sign(value_2)) result->type = S21_INF_NEG;
+        else if (value_2.type == S21_INF_NEG) result->type = S21_INF_NEG;
+        else 
+            result->type = S21_NAN;
+    } else if (value_1.type == S21_INF_NEG) {
+        if (value_2.type == S21_INF) result->type = S21_INF_NEG;
+        else if (value_2.type == S21_NORMAL && !check_sign(value_2)) result->type = S21_INF_NEG;
+        else if (value_2.type == S21_NORMAL && check_sign(value_2)) result->type = S21_INF;
+        else if (value_2.type == S21_INF_NEG) result->type = S21_INF;
+        else 
+            result->type = S21_NAN;
+    } else if (value_1.type == S21_NAN) 
+            result->type = S21_NAN;
+}
+
+// вернет 0 если типы децимал нормальные
+// вернет 1 и поменяет result если типы не normal
+
+int check_type(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    int status = 0, number = 0;
+    while(number == 0) {
+        if (value_1.type == S21_INF) number = 1;
+        else if (value_2.type == S21_INF) number = 2;
+        else if (value_1.type == S21_INF_NEG) number = 1;
+        else if (value_2.type == S21_INF_NEG) number = 2;
+        else if (value_1.type == S21_NAN) number = 1;
+        else if (value_2.type == S21_NAN) number = 2;
+        else if (value_1.type == S21_NORMAL) number = 1;
+    }
+    if (number == 1 && value_1.type != S21_NORMAL) {
+        mul_neadekvat_value(value_1, value_2, result);
+        status++;
+    } else if (number == 2 && value_2.type != S21_NORMAL){
+        mul_neadekvat_value(value_2, value_1, result);
+        status++;
+    }
     return status;
 }
 
-int check_adekvat_value(s21_decimal value_1, s21_decimal value_2) {
+int check_adekvat_value(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int status = 0;
-    status = check_scale(value_1, value_2) + check_type(value_1, value_2);
+    status = check_scale(value_1, value_2) + check_type(value_1, value_2, result);
     return status;
 }
 
 
 int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int status = 0, status_negative = balance_sign_mul(&value_1, &value_2);
-    s21_decimal sum;
-    init_decimal(&sum);
-    init_decimal(result);
-    if (!is_zero_mant(value_1) && !is_zero_mant(value_2)) {
-        if (s21_is_greater(value_1, value_2)) {
-            status = norm_mul(&value_1, &value_2, &sum);
-        } else
-            status = norm_mul(&value_2, &value_1, &sum);
-        cpy_decimal(sum, result);
-        result->bits[3] = 0;
-        set_dec_scale(get_dec_scale(value_1) + get_dec_scale(value_2), result);
+    status = check_adekvat_value(value_1, value_2, result);
+    if (!status) {
+        s21_decimal sum;
+        init_decimal(&sum);
+        init_decimal(result);
+        if (!is_zero_mant(value_1) && !is_zero_mant(value_2)) {
+            if (s21_is_greater(value_1, value_2)) {
+                status = norm_mul(&value_1, &value_2, &sum);
+            } else
+                status = norm_mul(&value_2, &value_1, &sum);
+            cpy_decimal(sum, result);
+            result->bits[3] = 0;
+            set_dec_scale(get_dec_scale(value_1) + get_dec_scale(value_2), result);
+        }
+        if (status_negative) set_sign(result, 1);
     }
-    if (status_negative) set_sign(result, 1);
     return status;
 }

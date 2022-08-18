@@ -4,34 +4,58 @@
 #include "comparsion/s21_comparsion.h"
 #include "other/s21_other.h"
 #include "arithmetic/s21_arithmetic.h"
+#include <time.h>
+
+#define s21_INFINITY 1/0.0
+#define s21_NAN 0.0/0.0
+
+void random_decimal(s21_decimal *value) {
+    value->type = rand() % 4;
+    for (unsigned int i = 0; i < 3; i++)
+        value->bits[i] = (rand() % 100) * 0.3456;
+    value->bits[3] = rand() % 27;
+}
 
 int main () {
-    s21_decimal a, b;
-    int count_ok = 0, count_not = 0;
-    float A = -9138.672456787213215545455;
-    for (; A < 465.3134354256565; A += 127.56351351) {
-    float B = A * (0.4567789789765451);
+        s21_decimal dst;
+    float f1 = 4.2;
+    printf("%.28f\n", f1);
+    s21_from_float_to_decimal(f1, &dst);
 
-    // printf("round %.30f = %.30f\nfloor %.30f = %.30f\n", B, round(B), B, floorf(B));
-    // printf("%.30f mod %.30f = %.30f\n", A, B, fmodf(A, B));
-    s21_from_float_to_decimal(A, &a);
-    s21_from_float_to_decimal(B, &b);
-    // print_decimal(a);
-    // print_decimal(b);
+    s21_decimal dst2;
+    float f2 = 2.0;
+    printf("%.28f\n", f2);
+    s21_from_float_to_decimal(f2, &dst2);
 
-    s21_from_decimal_to_float(a, &A);
-    s21_from_decimal_to_float(b, &B);
-    // printf("%.30f %.30f\n", A, B);
-    s21_decimal result = ZERO_DECIMAL;
-    s21_mul(a, b, &result);
-    // print_decimal(result);
-    float res;
-    s21_from_decimal_to_float(result, &res);
-    printf("%.30f\n", res);
-    printf("result: %.28f\n", A * B);
-    if (res == A * B) count_ok++;
-    else count_not++;
-    }
-    printf("%d\n%d", count_ok, count_not);
+    s21_decimal result;
+    s21_div(dst, dst2, &result);
+
+    float resu = 0.0;
+    s21_from_decimal_to_float(result, &resu);
+    printf("result: %.30f\nres: %.30f", resu, (double) f1 / (double) f2);
+    // srand(time(NULL));
+    // s21_decimal a, b;
+    // int count_ok = 0, count_not = 0;
+    
+    // s21_decimal result = ZERO_DECIMAL;
+    // float a1 = -10.56789;
+    // for (; a1 < 12.0823; a1 += 4.32486) {
+    // float b1 = a1 * 0.5622;
+    // s21_from_float_to_decimal(a1, &a);
+    // s21_from_float_to_decimal(b1, &b);
+    //     s21_mul(a, b, &result);
+    // float a2, b2;
+    // s21_from_decimal_to_float(a, &a2);
+    // s21_from_decimal_to_float(b, &b2);
+    // printf("before\na: %.30f\nafter\na: %.30f\n", a1, a2);
+    // printf("before\nb: %.30f\nafter\nb: %.30f\n", b1, b2);
+    //     float res;
+    //     s21_from_decimal_to_float(result, &res);
+    //     printf("%.30f\n", res);
+    //     printf("%.30f\n", a1 * b1);
+    // if (res == a1 * b1) count_ok++;
+    // else count_not++;
+    // printf("%d\n%d", count_ok, count_not);
+    // }
     return 0;
 }
