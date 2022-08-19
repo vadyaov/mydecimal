@@ -11,3 +11,4 @@ int simple_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int simple_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 
 s21_decimal int_div(s21_decimal value_1, s21_decimal value_2);
+int is_normal_values(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);

@@ -1,42 +1,56 @@
 #include "../decimal_test.h"
 
 START_TEST(round_t1) {
-    int x = rand();
+    s21_decimal a = {{0, 12345, 6789, 0}, S21_NORMAL}, res = {{0, 12345, 6789, 0}, S21_NORMAL};
+    s21_decimal round_a = {0};
 
-    if (rand() % 2) x = -x;
+    s21_round(a, &round_a);
+    ck_assert_int_eq(s21_is_equal(round_a, res), 1);
+} END_TEST
 
-    s21_decimal expected = {0};
-    int sign = x > 0 ? 0 : 1;
+START_TEST(round_t2) {
+    s21_decimal a = {{2147483648, 12345, 6789, 0}, S21_NORMAL}, res = {{2147483648, 12345, 6789, 0}, S21_NORMAL};
+    s21_decimal round_a = {0};
 
-    x = abs(x);
-    int expected_int = x;
+    s21_round(a, &round_a);
+    ck_assert_int_eq(s21_is_equal(round_a, res), 1);
+} END_TEST
 
-    if (x % 10 >= 5)
-        expected_int = (expected_int / 10 + 1);
-    else
-        expected_int /= 10;
+START_TEST(round_t3) {
+    s21_decimal a, res, round_a;
+    s21_from_float_to_decimal(-5555.0, &a);
+    set_dec_scale(26, &a);
+    s21_from_float_to_decimal(-6.0, &res);
+    s21_round(a, &round_a);
+    ck_assert_int_eq(s21_is_equal(round_a, res), 1);
+} END_TEST
 
-    expected_int = sign < 0 ? -expected_int : expected_int;
-    s21_from_int_to_decimal(expected_int, &expected);
+START_TEST(round_t4) {
+    s21_decimal a, res, round_a;
+    s21_from_float_to_decimal(-5.5, &a);
+    s21_from_float_to_decimal(-6, &res);
+    s21_round(a, &round_a);
+    ck_assert_int_eq(s21_is_equal(round_a, res), 1);
+} END_TEST
 
-    s21_decimal got = {0};
-    x = sign ? -x : x;
-    s21_from_int_to_decimal(x, &got);
-    set_dec_scale(1, &got);
 
-    s21_decimal res = {0};
-    int ret = s21_floor(got, &res);
-    ck_assert_int_eq(s21_is_equal(expected, res), 1);
-    ck_assert_int_eq(ret, SUCCESS);
-  }
-  END_TEST
+Suite *s21_round_test() {
+    Suite *s = suite_create("[s21_round] Unit Test");
 
-  Suite *s21_round_test() {
-      Suite *s = suite_create("[s21_round] Unit Test");
-      TCase *tc1_s21_round = tcase_create("round_t1");
+    TCase *tc1_s21_round = tcase_create("round_t1");
+    TCase *tc2_s21_round = tcase_create("round_t1");
+    TCase *tc3_s21_round = tcase_create("round_t1");
+    TCase *tc4_s21_round = tcase_create("round_t1");
 
-      tcase_add_loop_test(tc1_s21_round, round_t1, 0, 50);
+    tcase_add_test(tc1_s21_round, round_t1);
+    tcase_add_test(tc2_s21_round, round_t2);
+    tcase_add_test(tc3_s21_round, round_t3);
+    tcase_add_test(tc4_s21_round, round_t4);
 
-      suite_add_tcase(s, tc1_s21_round);
-      return s;
-  }
+    suite_add_tcase(s, tc1_s21_round);
+    suite_add_tcase(s, tc2_s21_round);
+    suite_add_tcase(s, tc3_s21_round);
+    suite_add_tcase(s, tc4_s21_round);
+
+    return s;
+}

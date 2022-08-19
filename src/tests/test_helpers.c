@@ -1,5 +1,7 @@
 #include "decimal_test.h"
 
+#define IS_SET(X, POS) ((X >> POS) & 1U)
+
 int get_rand_int(int min, int max) {
     return (rand() % (max - min + 1) + min);
 }
@@ -49,7 +51,7 @@ s21_decimal ll_to_decimal(long long val) {
 }
 
 s21_decimal bigint_to_decimal(__int128_t src) {
-    s21_decimal res = {0};
+    s21_decimal res = ZERO_DECIMAL;
 
     if (src < 0) {
         set_sign(&res, 1);
@@ -57,7 +59,7 @@ s21_decimal bigint_to_decimal(__int128_t src) {
     }
     for (int i = 0, k = 0; i < 3; i++)
         for (int j = 0; j < 32; j++, k++)
-            if (isBit(src, k))
+            if (IS_SET(src, k))
                 res.bits[i] = setBit(res.bits[i], j);
 
     return res;

@@ -6,33 +6,23 @@
 #include "arithmetic/s21_arithmetic.h"
 #include <time.h>
 
-#define s21_INFINITY 1/0.0
-#define s21_NAN 0.0/0.0
-
-void random_decimal(s21_decimal *value) {
-    value->type = rand() % 4;
-    for (unsigned int i = 0; i < 3; i++)
-        value->bits[i] = (rand() % 100) * 0.3456;
-    value->bits[3] = rand() % 27;
-}
-
 int main () {
-        s21_decimal dst;
-    float f1 = 4.2;
-    printf("%.28f\n", f1);
-    s21_from_float_to_decimal(f1, &dst);
+    //     s21_decimal dst;
+    // float f1 = 4.2;
+    // printf("%.28f\n", f1);
+    // s21_from_float_to_decimal(f1, &dst);
 
-    s21_decimal dst2;
-    float f2 = 2.0;
-    printf("%.28f\n", f2);
-    s21_from_float_to_decimal(f2, &dst2);
+    // s21_decimal dst2;
+    // float f2 = 2.0;
+    // printf("%.28f\n", f2);
+    // s21_from_float_to_decimal(f2, &dst2);
 
-    s21_decimal result;
-    s21_div(dst, dst2, &result);
+    // s21_decimal result;
+    // s21_div(dst, dst2, &result);
 
-    float resu = 0.0;
-    s21_from_decimal_to_float(result, &resu);
-    printf("result: %.30f\nres: %.30f", resu, (double) f1 / (double) f2);
+    // float resu = 0.0;
+    // s21_from_decimal_to_float(result, &resu);
+    // printf("result: %.30f\nres: %.30f", resu, (double) f1 / (double) f2);
     // srand(time(NULL));
     // s21_decimal a, b;
     // int count_ok = 0, count_not = 0;
@@ -57,5 +47,13 @@ int main () {
     // else count_not++;
     // printf("%d\n%d", count_ok, count_not);
     // }
+    float inf_pos = S21_HUGE_VAL;
+    float inf_neg = -S21_HUGE_VAL;
+    float nan = S21_NAN_VAL;
+    printf("pos + neg = %f\n", inf_pos + inf_neg);
+    printf("nan + pos = %f\n", nan + inf_pos);
+    printf("nan + neg = %f\n", nan + inf_neg);
+    printf("pos + pos = %f\n", inf_pos + inf_pos);
+    printf("neg + neg = %f\n", inf_neg + inf_neg);
     return 0;
 }

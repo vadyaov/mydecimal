@@ -23,10 +23,13 @@ short int get_random_short(void);
 Suite *s21_from_int_to_decimal_test();
 Suite *s21_from_float_to_decimal_test();
 Suite *s21_from_decimal_to_int_test();
+Suite *s21_from_decimal_to_float_test();
 Suite *s21_floor_test();
 Suite *s21_round_test();
 Suite *s21_truncate_test();
+Suite *s21_negate_test();
 Suite *s21_add_test();
+Suite *s21_sub_test();
 Suite *s21_mul_test();
 
 #endif  // SRC_TESTS_DECIMAL_TEST_H_

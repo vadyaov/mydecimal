@@ -97,3 +97,40 @@ s21_decimal int_div(s21_decimal value_1, s21_decimal value_2) {
     }
     return res;
 }
+
+int is_normal_values(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    int res = 1;
+    if (value_1.type == S21_NAN || value_2.type == S21_NAN) {
+        decimal_nan_value(result);
+        res = 0;
+    } else if (value_1.type == S21_INF) {
+        if (value_2.type == S21_INF) {
+            decimal_pos_overflow(result);
+        } else if (value_2.type == S21_INF_NEG) {
+            decimal_nan_value(result);
+        }
+        res = 0;
+    } else if (value_1.type == S21_INF_NEG) {
+        if (value_2.type == S21_INF) {
+            decimal_nan_value(result);
+        } else if (value_2.type == S21_INF_NEG) {
+            decimal_neg_overflow(result);
+        }
+        res = 0;
+    } else if (value_2.type == S21_INF) {
+        if (value_1.type == S21_INF) {
+            decimal_pos_overflow(result);
+        } else if (value_1.type == S21_INF_NEG) {
+            decimal_nan_value(result);
+        }
+        res = 0;
+    } else if (value_2.type == S21_INF_NEG) {
+        if (value_1.type == S21_INF) {
+            decimal_nan_value(result);
+        } else if (value_1.type == S21_INF_NEG) {
+            decimal_neg_overflow(result);
+        }
+        res = 0;
+    }
+    return res;
+}

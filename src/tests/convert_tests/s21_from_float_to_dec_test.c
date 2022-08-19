@@ -2,12 +2,12 @@
 
 START_TEST(float_to_dec_t1) {
     s21_decimal result;
-    float float_number1 = get_rand_float(-98765.43; 98765.43);
-    int status = s21_from_float_to_decimal(float_number, &result);
+    float float_number1 = get_rand_float(-98765.43, 98765.43);
+    int status = s21_from_float_to_decimal(float_number1, &result);
     float float_number2;
     s21_from_decimal_to_float(result, &float_number2);
     ck_assert_int_eq(status, SUCCESS);
-    ck_assert_float_eq_tol(number1, number2, 1e-6);
+    ck_assert_float_eq_tol(float_number1, float_number2, 1e-6);
 } END_TEST
 
 START_TEST(float_to_dec_t2) {

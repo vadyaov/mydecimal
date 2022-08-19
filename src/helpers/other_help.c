@@ -46,6 +46,8 @@ int get_dec_scale(s21_decimal a) {
 
 void set_dec_scale(int scale, s21_decimal *a) {
     for (unsigned int mask = 1U, i = 16; i <= 23; mask <<= 1, i++)
+            a->bits[EXT] = clearBit(a->bits[EXT], i);
+    for (unsigned int mask = 1U, i = 16; i <= 23; mask <<= 1, i++)
         if (!!(scale & mask))
             a->bits[EXT] = setBit(a->bits[EXT], i);
 }
