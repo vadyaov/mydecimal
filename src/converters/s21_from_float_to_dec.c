@@ -18,14 +18,12 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
                 } else {
                     
                     long double srctmp = (long double)src;
-                    // printf("srtcmp = %.30Lf\n", srctmp);
                     char bits[129] = {'\0'};
                     exp = integer_part_count(srctmp);
-                    // printf("exp = %d\n", exp);
                     int scale = get_bit_string(srctmp, bits, exp);
-                    // printf("scale = %d\n", scale);
                     set_bits_from_string(bits, dst);
                     set_dec_scale(scale, dst);
+                    
                     /*
                     int floatExp = get_float_exp(src);
                     convert_error = isBigExp(floatExp);

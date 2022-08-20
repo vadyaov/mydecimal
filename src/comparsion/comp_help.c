@@ -1,7 +1,6 @@
 #include "s21_comparsion.h"
 
 int simple_greater(s21_decimal value_1, s21_decimal value_2) {
-    if (simple_equal(value_1, value_2)) return 0;
     int res = 0;
     int pos1 = find_first_rbit(value_1);
     int pos2 = find_first_rbit(value_2);
@@ -29,7 +28,6 @@ int simple_greater(s21_decimal value_1, s21_decimal value_2) {
 }
 
 int simple_less(s21_decimal value_1, s21_decimal value_2) {
-    if (simple_equal(value_1, value_2)) return 0;
     return (!simple_greater(value_1, value_2));
 }
 

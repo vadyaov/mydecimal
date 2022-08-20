@@ -2,29 +2,32 @@
 #include <limits.h>
 
 START_TEST(add_t1) {
-    float a = 0.0;
-    for (; a < 4556.789123; a += 0.12378) {
-        float b = 7.45 * a;
+    float x = 100.0;
+    float a = (float)rand()/(float)(RAND_MAX/x);
+    float b = (float)rand()/(float)(RAND_MAX/x);
 
-        s21_decimal adec;
-        s21_from_float_to_decimal(a, &adec);
+    if (rand() % 2)
+        a = -a;
+    if (rand() % 2)
+        b = -b;
+    s21_decimal adec;
+    s21_from_float_to_decimal(a, &adec);
 
-        s21_decimal bdec;
-        s21_from_float_to_decimal(b, &bdec);
+    s21_decimal bdec;
+    s21_from_float_to_decimal(b, &bdec);
 
-        s21_decimal result;
-        init_decimal(&result);
-        s21_add(adec, bdec, &result);
+    s21_decimal result;
+    init_decimal(&result);
 
-        float res = 0.0;
-        s21_from_decimal_to_float(result, &res);
+    s21_add(adec, bdec, &result);
 
-        s21_decimal resdec_expected;
-        s21_from_float_to_decimal(a + b, &resdec_expected);
+    float res = 0.0;
+    s21_from_decimal_to_float(result, &res);
 
-        ck_assert_double_eq(a + b, res);
-        ck_assert_int_eq(s21_is_equal(result, resdec_expected), 1);
-    }
+    s21_decimal resdec_expected;
+    s21_from_float_to_decimal(a + b, &resdec_expected);
+
+    ck_assert_double_eq_tol(a + b, res, 1e-3);
 }
 END_TEST
 
@@ -101,7 +104,7 @@ Suite *s21_add_test() {
     TCase *tc3_s21_add = tcase_create("add_t3");
     TCase *tc4_s21_add = tcase_create("add_t4");
 
-    tcase_add_test(tc1_s21_add, add_t1);
+    tcase_add_loop_test(tc1_s21_add, add_t1, 0, 100);
     tcase_add_test(tc2_s21_add, add_t2);
     tcase_add_test(tc3_s21_add, add_t3);
     tcase_add_loop_test(tc4_s21_add, add_t4, 0, 10);

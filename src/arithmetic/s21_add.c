@@ -7,6 +7,16 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             int sign1 = check_sign(value_1),
                 sign2 = check_sign(value_2);
             balance(&value_1, &value_2);
+            // printf("AFTER BALANCE:\n");
+            // print_decimal(value_1);
+            // print_decimal(value_2);
+            if (!is_zero_mant(value_1) && !is_zero_mant(value_2)) {
+                while (!isBit(value_1.bits[LOW], 0) && !isBit(value_2.bits[LOW], 0)
+                        && get_dec_scale(value_1) && get_dec_scale(value_2)) {
+                    scale_low(&value_1, 1);
+                    scale_low(&value_2, 1);
+                }
+            }
             init_decimal(result);
             int scale = get_dec_scale(value_1);
             if (!sign1 && !sign2) {

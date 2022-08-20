@@ -1,7 +1,7 @@
 CC	=	gcc
 CFLAGS	=	-c	-Wall	-Werror	-Wextra	-std=c11	-pedantic
 SOURCES	=	arithmetic/*.c	comparsion/*.c	converters/*.c	helpers/*.c	other/*.c
-TEST_SRCS	=	tests/convert_tests/*.c	tests/other_tests/*.c tests/arithmetic_tests/*.c #tests/comparsion_test/*.c
+TEST_SRCS	=	tests/convert_tests/*.c	tests/other_tests/*.c tests/arithmetic_tests/*.c tests/comparsion_test/*.c
 RFLAGS	=	-fprofile-arcs	-ftest-coverage
 LFLAGS	=	-lcheck	-lm	-lpthread
 LIB_NAME	=	s21_decimal.a

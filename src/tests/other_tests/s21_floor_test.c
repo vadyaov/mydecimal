@@ -5,7 +5,7 @@ START_TEST(floor_t1) {
 
     if (rand() % 2) x = -x;
 
-    s21_decimal expected = {0};
+    s21_decimal expected = ZERO_DECIMAL;
     int expected_int = abs(x);
 
     if (x < 0 && expected_int % 10 != 0)
@@ -16,14 +16,15 @@ START_TEST(floor_t1) {
     expected_int = x < 0 ? -expected_int : expected_int;
 
     s21_from_int_to_decimal(expected_int, &expected);
-
-    s21_decimal got = {0};
+    // printf("exp: ");print_decimal(expected);
+    s21_decimal got = ZERO_DECIMAL;
     s21_from_int_to_decimal(x, &got);
     set_dec_scale(1, &got);
 
-    s21_decimal res = {0};
+    s21_decimal res = ZERO_DECIMAL;
+    // printf("got: ");print_decimal(got);
     int ret = s21_floor(got, &res);
-
+    // printf("res: ");print_decimal(res);
     ck_assert_int_eq(s21_is_equal(expected, res), 1);
     ck_assert_int_eq(ret, SUCCESS);
   }
@@ -33,8 +34,11 @@ START_TEST(floor_t1) {
       Suite *s = suite_create("[s21_floor] Unit Test");
       TCase *tc1_s21_floor = tcase_create("floor_t1");
 
-      tcase_add_loop_test(tc1_s21_floor, floor_t1, 0, 50);
+      tcase_add_loop_test(tc1_s21_floor, floor_t1, 0, 25);
 
       suite_add_tcase(s, tc1_s21_floor);
       return s;
   }
+
+  // 1323239917
+  // 132323992

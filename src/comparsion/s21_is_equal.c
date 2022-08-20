@@ -1,6 +1,9 @@
 #include "s21_comparsion.h"
 
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
+    // print_decimal(value_1);
+    // print_decimal(value_2);
+    // printf("\n");
     int result = 0;
     if ((value_1.type == S21_INF && value_2.type == S21_INF) ||
         (value_1.type == S21_INF_NEG && value_2.type == S21_INF_NEG)) {
@@ -21,5 +24,8 @@ int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
             result = 0;
         }
     }
+    // printf("result = %d\n", result);
     return result;
 }
+// 212525223
+// 212525224

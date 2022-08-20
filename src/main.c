@@ -7,53 +7,12 @@
 #include <time.h>
 
 int main () {
-    //     s21_decimal dst;
-    // float f1 = 4.2;
-    // printf("%.28f\n", f1);
-    // s21_from_float_to_decimal(f1, &dst);
-
-    // s21_decimal dst2;
-    // float f2 = 2.0;
-    // printf("%.28f\n", f2);
-    // s21_from_float_to_decimal(f2, &dst2);
-
-    // s21_decimal result;
-    // s21_div(dst, dst2, &result);
-
-    // float resu = 0.0;
-    // s21_from_decimal_to_float(result, &resu);
-    // printf("result: %.30f\nres: %.30f", resu, (double) f1 / (double) f2);
-    // srand(time(NULL));
-    // s21_decimal a, b;
-    // int count_ok = 0, count_not = 0;
-    
-    // s21_decimal result = ZERO_DECIMAL;
-    // float a1 = -10.56789;
-    // for (; a1 < 12.0823; a1 += 4.32486) {
-    // float b1 = a1 * 0.5622;
-    // s21_from_float_to_decimal(a1, &a);
-    // s21_from_float_to_decimal(b1, &b);
-    //     s21_mul(a, b, &result);
-    // float a2, b2;
-    // s21_from_decimal_to_float(a, &a2);
-    // s21_from_decimal_to_float(b, &b2);
-    // printf("before\na: %.30f\nafter\na: %.30f\n", a1, a2);
-    // printf("before\nb: %.30f\nafter\nb: %.30f\n", b1, b2);
-    //     float res;
-    //     s21_from_decimal_to_float(result, &res);
-    //     printf("%.30f\n", res);
-    //     printf("%.30f\n", a1 * b1);
-    // if (res == a1 * b1) count_ok++;
-    // else count_not++;
-    // printf("%d\n%d", count_ok, count_not);
-    // }
-    float inf_pos = S21_HUGE_VAL;
-    float inf_neg = -S21_HUGE_VAL;
-    float nan = S21_NAN_VAL;
-    printf("pos + neg = %f\n", inf_pos + inf_neg);
-    printf("nan + pos = %f\n", nan + inf_pos);
-    printf("nan + neg = %f\n", nan + inf_neg);
-    printf("pos + pos = %f\n", inf_pos + inf_pos);
-    printf("neg + neg = %f\n", inf_neg + inf_neg);
-    return 0;
+    float a = -2125252230.0;
+    printf("%f", floorf(a));
+    // s21_decimal A = ZERO_DECIMAL;
+    // s21_from_int_to_decimal(a, &A);
+    // set_dec_scale(1, &A);
+    // s21_decimal res = ZERO_DECIMAL;
+    // s21_truncate(A, &res);
+    // print_decimal(res);
 }
