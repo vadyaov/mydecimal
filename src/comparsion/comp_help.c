@@ -16,8 +16,10 @@ int simple_greater(s21_decimal value_1, s21_decimal value_2) {
                 int bit1 = isBit(value_1.bits[i], j);
                 int bit2 = isBit(value_2.bits[i], j);
                 if (bit1 != bit2) {
-                    if (bit1 < bit2) res = 0;
-                    else res = 1;
+                    if (bit1 < bit2)
+                        res = 0;
+                    else
+                        res = 1;
                     decision = 1;
                 }
             }

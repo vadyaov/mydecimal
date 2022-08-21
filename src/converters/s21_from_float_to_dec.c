@@ -16,14 +16,12 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
                     set_invisible(dst, 23);
                     shift_mant_left(dst, exp - 23);
                 } else {
-                    
                     long double srctmp = (long double)src;
                     char bits[129] = {'\0'};
                     exp = integer_part_count(srctmp);
                     int scale = get_bit_string(srctmp, bits, exp);
                     set_bits_from_string(bits, dst);
                     set_dec_scale(scale, dst);
-                    
                     /*
                     int floatExp = get_float_exp(src);
                     convert_error = isBigExp(floatExp);

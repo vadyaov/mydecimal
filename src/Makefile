@@ -1,6 +1,6 @@
 CC	=	gcc
 CFLAGS	=	-c	-Wall	-Werror	-Wextra	-std=c11	-pedantic
-ARITH_SRC	=	arithmetic/s21_add.c	arithmetic/s21_div.c	arithmetic/s21_mod.c	arithmetic/s21_mul.c	arithmetic/s21_sub.c
+ARITH_SRC	=	arithmetic/s21_add.c	arithmetic/s21_mod.c	arithmetic/s21_mul.c	arithmetic/s21_sub.c	#arithmetic/s21_div.c
 COMPR_SRC	=	comparsion/s21_is_equal.c	comparsion/s21_is_not_eq.c	comparsion/s21_is_greater_or_eq.c	comparsion/s21_is_greater.c	comparsion/s21_is_less_or_eq.c	comparsion/s21_is_less.c
 CONVR_SRC	=	converters/s21_from_dec_to_float.c	converters/s21_from_dec_to_int.c	converters/s21_from_float_to_dec.c	converters/s21_from_int_to_dec.c
 OTHER_SRC	=	other/*.c
@@ -40,5 +40,6 @@ gcov_report:
 clean:
 	rm	-rf	*.o	*.out	*.gcno	*.gcna	*.html	*.gcda	*.css	*.exe
 	rm	-rf	*.a
+	rm -rf tests/runtest
 
 rebuild:	clean	s21_decimal.a

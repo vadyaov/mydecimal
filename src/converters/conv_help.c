@@ -49,9 +49,9 @@ void set_invisible(s21_decimal *dst, int pos) {
 int get_bit_string(long double res, char *bits, int exponent) {
     int mn = 0;
     if (exponent == 1 && !(unsigned int)res) mn = 28;
-    else mn = 28 - exponent - 1;
+    else
+        mn = 28 - exponent - 1;
     res *= powl(10.0L, (long double)(mn));
-    // printf("RES = %Lf\n", res);
     res = roundl(res);
     for (int i = 0; res > 1e-6; i++) {
         res = floorl(res) / 2;
@@ -121,13 +121,13 @@ void set1bit(s21_decimal *dst, int exp) {
     int pos = exp > 0 ? exp : abs(exp) - 1;
     if (exp < 32)
         dst->bits[0] = setBit(dst->bits[0], pos);
-    else if (exp > 31 && exp < 64)
+    else if (exp < 64)
         dst->bits[1] = setBit(dst->bits[1], pos - 32);
-    else if (exp > 63 && exp < 96)
+    else if (exp < 96)
         dst->bits[2] = setBit(dst->bits[2], pos - 64);
 }
 
-void put_mantiss_in_decimal(s21_decimal *dst, char *str) {
+void put_mantiss_in_decimal(s21_decimal *dst, const char *str) {
     for (int i = 0; i < 32; i++) {
         if (str[i] == '1')
             dst->bits[0] = setBit(dst->bits[0], i);

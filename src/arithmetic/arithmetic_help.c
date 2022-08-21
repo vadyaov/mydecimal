@@ -8,12 +8,10 @@ int simple_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         for (int j = 0; j < INT_BITS; j++) {
             bit1 = isBit(value_1.bits[i], j);
             bit2 = isBit(value_2.bits[i], j);
-            //printf("j:%d  1)%d\t2)%d\tmem = %d\n", j, bit1, bit2, membit);
             if (!bit1 && !bit2) {
                 if (!membit) {
                     result->bits[i] = clearBit(result->bits[i], j);
-                }
-                else {
+                } else {
                     result->bits[i] = setBit(result->bits[i], j);
                     membit = 0;
                 }
@@ -87,7 +85,8 @@ s21_decimal int_div(s21_decimal value_1, s21_decimal value_2) {
     } else if (simple_equal(value_1, value_2)) {
         return tmp;
     } else {
-        while ((simple_greater(value_1, value_2) || simple_equal(value_1, value_2)) && !isBit(value_2.bits[HIGH], 95)) {
+        while ((simple_greater(value_1, value_2) || simple_equal(value_1, value_2))
+               && !isBit(value_2.bits[HIGH], 95)) {
             shiftleft(&value_2);
         }
         if (simple_greater(value_2, value_1))
@@ -117,7 +116,7 @@ int is_normal_values(s21_decimal value_1, s21_decimal value_2, s21_decimal *resu
             decimal_neg_overflow(result);
         }
         res = 0;
-    } else if (value_2.type == S21_INF) {
+    /*} else if (value_2.type == S21_INF) {
         if (value_1.type == S21_INF) {
             decimal_pos_overflow(result);
         } else if (value_1.type == S21_INF_NEG) {
@@ -131,6 +130,6 @@ int is_normal_values(s21_decimal value_1, s21_decimal value_2, s21_decimal *resu
             decimal_neg_overflow(result);
         }
         res = 0;
-    }
+    }*/
     return res;
 }

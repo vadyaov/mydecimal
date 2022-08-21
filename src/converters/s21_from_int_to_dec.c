@@ -14,12 +14,3 @@ int s21_from_int_to_decimal(int src, s21_decimal *dst) {
     }
     return convert_error;
 }
-
-// int main () {
-//     int a = 5;
-//     s21_decimal dst;
-//     set_dec_scale(255, &dst);
-//     print_decimal(dst);
-//     printf("%d\n", get_dec_scale(dst));
-//     return 0;
-// }

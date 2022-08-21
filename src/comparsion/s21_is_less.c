@@ -9,7 +9,7 @@ int s21_is_less(s21_decimal value_1, s21_decimal value_2) {
     } else if ((value_1.type == S21_INF_NEG &&
                (value_2.type == S21_INF || value_2.type == S21_NORMAL)) ||
                (value_1.type == S21_NORMAL && value_2.type == S21_INF)) {
-        result = 1; 
+        result = 1;
     } else if ((value_1.type == S21_INF) && (value_2.type == S21_INF_NEG)) {
         result = 0;
     } else if ((value_1.type == S21_INF && value_2.type == S21_NORMAL) ||

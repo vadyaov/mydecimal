@@ -1,5 +1,8 @@
 #include "s21_arithmetic.h"
 
+int s21_div2(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+void count_div_part(s21_decimal value_1, s21_decimal value_2, s21_decimal *result, s21_decimal *res2);
+
 #define setBit2(X, POS, BIT) ((X) |= (BIT << (POS)))
 
 void prebalance_value2(s21_decimal value_1, s21_decimal *value_2) {
@@ -35,11 +38,40 @@ void str_convert(s21_decimal *result, char *mantis) {
 }
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-    int status = 0, i = 0, count = 0;
+    int status = 0;
     init_decimal(result);
+
+    s21_decimal res2;  //  convert whole part from string to decimal, result is a fract part
+    count_div_part(value_1, value_2, result, &res2);
+    s21_decimal res3;
+    // set_dec_scale(28, result);
+    // s21_mod(value_1, value_2, result);
+
+    float res_exp = 0.0;
+    s21_from_decimal_to_float(*result, &res_exp);
+
+    if (!is_zero_mant(*result)) {
+        count_div_part(*result, value_2, result, &res3);
+    }
+
+    set_dec_scale(28, &res3);
+
+    s21_from_decimal_to_float(res3, &res_exp);
+
+    // result = ZERO_DECIMAL;
+    s21_add(res2, res3, result);
+
+    return status = 0;
+}
+
+// set scale
+// recursion for fract part
+
+void count_div_part(s21_decimal value_1, s21_decimal value_2, s21_decimal *result, s21_decimal *res2) {
+    int  count = 0, i = 0;
     char mantis[128] = {'0'};
     balance(&value_1, &value_2);
-    int pos_begin = find_first_rbit(value_2); 
+    int pos_begin = find_first_rbit(value_2);
 
     prebalance_value2(value_1, &value_2);
     simple_sub(value_1, value_2, result);
@@ -49,12 +81,12 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     if (simple_greater(value_2, *result)) {
         count = balance_value2(&value_2, *result, pos_begin);
         if (count > 1)
-            while(count-- > 1)
+            while (count-- > 1)
                 mantis[i++] = '0';
     }
 
     pos_now = find_first_rbit(value_2);
-    while(pos_now >= pos_begin) {
+    while (pos_now >= pos_begin) {
         if (simple_greater(*result, value_2)) {
             simple_sub(*result, value_2, result);
             mantis[i++] = '1';
@@ -63,7 +95,7 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             simple_sub(*result, value_2, result);
             mantis[i++] = '1';
             pos_now = find_first_rbit(value_2);
-            while (pos_now > pos_begin) { // если вал2 не на своем месте то смещать и добавлять 0
+            while (pos_now > pos_begin) {  // если вал2 не на своем месте то смещать и добавлять 0
                 shiftright(&value_2);
                 mantis[i++] = '0';
                 pos_now = find_first_rbit(value_2);
@@ -71,31 +103,17 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         }
         if (simple_greater(value_2, *result)) {
             count = 0;
-            if (pos_now > pos_begin) { // если вал2 не на своем месте то смещать и добавлять 0
+            if (pos_now > pos_begin) {  // если вал2 не на своем месте то смещать и добавлять 0
                 count = balance_value2(&value_2, *result, pos_begin);
                 if (count > 1)
-                    while(count-- > 1)
+                    while (count-- > 1)
                         mantis[i++] = '0';
-            } else
+            } else {
                 break;
+            }
         }
         pos_now = find_first_rbit(value_2);
     }
-
-    s21_decimal res2;
-    init_decimal(&res2);
-    // convert str to decimal
-    str_convert(&res2, mantis);
-    print_decimal(res2);
-    // s21_decimal *res3;
-    // s21_add(res2, *res3, &res2);
-    float result2 = 0.0;
-    s21_from_decimal_to_float(res2, &result2);
-     float result3 = 0.0;
-    s21_from_decimal_to_float(*result, &result3);    
-    printf("\n\n%.30f\n", result3);
-    s21_mod(value_1, value_2, result);
-    
-    
-    return status = 0;
+    init_decimal(res2);
+    str_convert(res2, mantis);
 }
