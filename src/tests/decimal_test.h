@@ -35,5 +35,8 @@ Suite *s21_mod_test();
 Suite *s21_is_equal_test();
 Suite *s21_is_greater_or_equal_test();
 Suite *s21_is_less_test();
+Suite *s21_is_greater_test();
+Suite *s21_is_not_equal_test();
+Suite *s21_is_less_or_equal_test();
 
 #endif  // SRC_TESTS_DECIMAL_TEST_H_
