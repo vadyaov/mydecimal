@@ -129,6 +129,42 @@ START_TEST(truncate_t10) {
     ck_assert_float_eq_tol(before, after, 1e-6);
 } END_TEST
 
+START_TEST(truncate_t11) {
+    s21_decimal before_trunc, after_trunc;
+    float before = 0.9235892;
+    s21_from_float_to_decimal(before, &before_trunc);
+    before_trunc.type = S21_INF;
+    s21_truncate(before_trunc, &after_trunc);
+    ck_assert_int_eq(after_trunc.type, S21_INF);
+} END_TEST
+
+START_TEST(truncate_t12) {
+    s21_decimal before_trunc, after_trunc;
+    float before = 0.9235892;
+    s21_from_float_to_decimal(before, &before_trunc);
+    before_trunc.type = S21_INF_NEG;
+    s21_truncate(before_trunc, &after_trunc);
+    ck_assert_int_eq(after_trunc.type, S21_INF_NEG);
+} END_TEST
+
+START_TEST(truncate_t13) {
+    s21_decimal before_trunc, after_trunc;
+    float before = 0.9235892;
+    s21_from_float_to_decimal(before, &before_trunc);
+    before_trunc.type = S21_NAN;
+    s21_truncate(before_trunc, &after_trunc);
+    ck_assert_int_eq(after_trunc.type, S21_NAN);
+} END_TEST
+
+START_TEST(truncate_t14) {
+    s21_decimal before_trunc;
+    s21_decimal *after_trunc = NULL;
+    float before = 0.9235892;
+    s21_from_float_to_decimal(before, &before_trunc);
+    int status = s21_truncate(before_trunc, after_trunc);
+    ck_assert_int_eq(status, FAIL);
+} END_TEST
+
 
 Suite *s21_truncate_test() {
     Suite *s = suite_create("[s21_truncate] Unit Test");
@@ -143,6 +179,10 @@ Suite *s21_truncate_test() {
     TCase *tc8_s21_truncate = tcase_create("truncate_t8");
     TCase *tc9_s21_truncate = tcase_create("truncate_t9");
     TCase *tc10_s21_truncate = tcase_create("truncate_t10");
+    TCase *tc11_s21_truncate = tcase_create("truncate_t11");
+    TCase *tc12_s21_truncate = tcase_create("truncate_t12");
+    TCase *tc13_s21_truncate = tcase_create("truncate_t13");
+    TCase *tc14_s21_truncate = tcase_create("truncate_t14");
 
     tcase_add_loop_test(tc1_s21_truncate, truncate_t1, 0, 50);
     tcase_add_test(tc2_s21_truncate, truncate_t2);
@@ -154,6 +194,10 @@ Suite *s21_truncate_test() {
     tcase_add_test(tc8_s21_truncate, truncate_t8);
     tcase_add_test(tc9_s21_truncate, truncate_t9);
     tcase_add_test(tc10_s21_truncate, truncate_t10);
+    tcase_add_test(tc11_s21_truncate, truncate_t11);
+    tcase_add_test(tc12_s21_truncate, truncate_t12);
+    tcase_add_test(tc13_s21_truncate, truncate_t13);
+    tcase_add_test(tc14_s21_truncate, truncate_t14);
 
     suite_add_tcase(s, tc1_s21_truncate);
     suite_add_tcase(s, tc2_s21_truncate);
@@ -165,6 +209,11 @@ Suite *s21_truncate_test() {
     suite_add_tcase(s, tc8_s21_truncate);
     suite_add_tcase(s, tc9_s21_truncate);
     suite_add_tcase(s, tc10_s21_truncate);
+    suite_add_tcase(s, tc11_s21_truncate);
+    suite_add_tcase(s, tc12_s21_truncate);
+    suite_add_tcase(s, tc13_s21_truncate);
+    suite_add_tcase(s, tc14_s21_truncate);
+
     return s;
 }
 

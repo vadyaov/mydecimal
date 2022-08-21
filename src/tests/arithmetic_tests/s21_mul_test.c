@@ -98,21 +98,57 @@ START_TEST(mul_t4) {
 }
 END_TEST
 
+START_TEST(mul_t5) {
+    s21_decimal adec;
+    s21_decimal bdec;
+    float a = 2.5;
+    float b = -2.5;
+    s21_decimal result;
+    s21_from_float_to_decimal(a, &adec);
+    s21_from_float_to_decimal(b, &bdec);
+    s21_mul(adec, bdec, &result);
+    float res;
+    s21_from_decimal_to_float(result, &res);
+    ck_assert_float_eq_tol(a * b, res, 1e-6);
+    
+} END_TEST
+
+START_TEST(mul_t6) {
+    s21_decimal adec;
+    s21_decimal bdec;
+    float a = -2.5;
+    float b = 2.5;
+    s21_decimal result;
+    s21_from_float_to_decimal(a, &adec);
+    s21_from_float_to_decimal(b, &bdec);
+    s21_mul(adec, bdec, &result);
+    float res;
+    s21_from_decimal_to_float(result, &res);
+    ck_assert_float_eq_tol(a * b, res, 1e-6);
+    
+} END_TEST
+
 Suite *s21_mul_test() {
     Suite *s = suite_create("[s21_mul] Unit Test");
     TCase *tc1_s21_mul = tcase_create("mul_t1");
     // TCase *tc2_s21_mul = tcase_create("mul_t2");
     // TCase *tc3_s21_mul = tcase_create("mul_t3");
     TCase *tc4_s21_mul = tcase_create("mul_t4");
+    TCase *tc5_s21_mul = tcase_create("mul_t5");
+    TCase *tc6_s21_mul = tcase_create("mul_t6");
 
     tcase_add_test(tc1_s21_mul, mul_t1);
     // tcase_add_test(tc2_s21_mul, mul_t2);
     // tcase_add_test(tc3_s21_mul, mul_t3);
     tcase_add_loop_test(tc4_s21_mul, mul_t4, 0, 10);
+    tcase_add_test(tc5_s21_mul, mul_t5);
+    tcase_add_test(tc6_s21_mul, mul_t6);
 
     suite_add_tcase(s, tc1_s21_mul);
     // suite_add_tcase(s, tc2_s21_mul);
     // suite_add_tcase(s, tc3_s21_mul);
     suite_add_tcase(s, tc4_s21_mul);
+    suite_add_tcase(s, tc5_s21_mul);
+    suite_add_tcase(s, tc6_s21_mul);
     return s;
 }

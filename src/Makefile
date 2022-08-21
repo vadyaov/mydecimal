@@ -23,7 +23,8 @@ s21_decimal.a:
 	ranlib	$(LIB_NAME)
 	rm	-r	*.o
 s21_decimal.a_peer:
-	$(CC)	$(CFLAGS)	$(HELP_SRC)	$(HELPERS)	$(RFLAGS)	$(SOURCES)
+	$(CC)	$(CFLAGS)	$(HELP_SRC)	$(HELPERS)
+	$(CC)	$(CFLAGS)	$(RFLAGS)	$(SOURCES)
 	ar	rcs	$(LIB_NAME)	*.o
 	ranlib	$(LIB_NAME)
 	rm	-r	*.o

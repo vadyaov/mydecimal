@@ -141,6 +141,17 @@ START_TEST(_is_greater_t15) {
     ck_assert_int_eq(s21_is_greater(a, b), 0);
 } END_TEST
 
+START_TEST(_is_greater_t16) {
+    s21_decimal a, b;
+    float A = 555.5;
+    float B = 555.5;
+    s21_from_float_to_decimal(A, &a);
+    s21_from_float_to_decimal(B, &b);
+    a.type = S21_NORMAL;
+    b.type = S21_NORMAL;
+    ck_assert_int_eq(s21_is_greater(a, b), 0);
+} END_TEST
+
 Suite *s21_is_greater_test() {
     Suite *s = suite_create("[s21_is_greater] Unit Test");
 
@@ -159,6 +170,7 @@ Suite *s21_is_greater_test() {
     TCase *tc13_s21_is_greater = tcase_create("_is_greater_t13");
     TCase *tc14_s21_is_greater = tcase_create("_is_greater_t14");
     TCase *tc15_s21_is_greater = tcase_create("_is_greater_t15");
+    TCase *tc16_s21_is_greater = tcase_create("_is_greater_t16");
 
     tcase_add_test(tc1_s21_is_greater, _is_greater_t1);
     tcase_add_test(tc2_s21_is_greater, _is_greater_t2);
@@ -175,6 +187,7 @@ Suite *s21_is_greater_test() {
     tcase_add_test(tc13_s21_is_greater, _is_greater_t13);
     tcase_add_test(tc14_s21_is_greater, _is_greater_t14);
     tcase_add_test(tc15_s21_is_greater, _is_greater_t15);
+    tcase_add_test(tc16_s21_is_greater, _is_greater_t16);
 
     suite_add_tcase(s, tc1_s21_is_greater);
     suite_add_tcase(s, tc2_s21_is_greater);
@@ -191,6 +204,7 @@ Suite *s21_is_greater_test() {
     suite_add_tcase(s, tc13_s21_is_greater);
     suite_add_tcase(s, tc14_s21_is_greater);
     suite_add_tcase(s, tc15_s21_is_greater);
+    suite_add_tcase(s, tc16_s21_is_greater);
 
     return s;
 }

@@ -30,15 +30,25 @@ START_TEST(floor_t1) {
   }
   END_TEST
 
-  Suite *s21_floor_test() {
-      Suite *s = suite_create("[s21_floor] Unit Test");
-      TCase *tc1_s21_floor = tcase_create("floor_t1");
+  START_TEST(floor_t2) {
+    s21_decimal a, res;
+    s21_decimal *round_a = NULL;
+    s21_from_float_to_decimal(-5.5, &a);
+    s21_from_float_to_decimal(-6, &res);
+    int sttaus = s21_floor(a, round_a);
+    ck_assert_int_eq(sttaus, FAIL);
+} END_TEST
 
-      tcase_add_loop_test(tc1_s21_floor, floor_t1, 0, 25);
+Suite *s21_floor_test() {
+    Suite *s = suite_create("[s21_floor] Unit Test");
 
-      suite_add_tcase(s, tc1_s21_floor);
-      return s;
-  }
+    TCase *tc1_s21_floor = tcase_create("floor_t1");
+    TCase *tc2_s21_floor = tcase_create("floor_t2");
 
-  // 1323239917
-  // 132323992
+    tcase_add_loop_test(tc1_s21_floor, floor_t1, 0, 25);
+    tcase_add_test(tc1_s21_floor, floor_t2);
+
+    suite_add_tcase(s, tc1_s21_floor);
+    suite_add_tcase(s, tc2_s21_floor);
+    return s;
+}
