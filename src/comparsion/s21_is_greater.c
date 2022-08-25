@@ -10,10 +10,10 @@ int s21_is_greater(s21_decimal value_1, s21_decimal value_2) {
                (value_2.type == S21_INF || value_2.type == S21_NORMAL)) ||
                (value_1.type == S21_NORMAL && value_2.type == S21_INF)) {
         result = 0; 
-    } else if (value_1.type = S21_INF && value_2.type == S21_INF_NEG) {
+    } else if ((value_1.type == S21_INF) && (value_2.type == S21_INF_NEG)) {
         result = 1;
     } else if ((value_1.type == S21_INF && value_2.type == S21_NORMAL) ||
-             (value_1.type == S21_NORMAL && value_2.type == S21_INF_NEG)) {
+               (value_1.type == S21_NORMAL && value_2.type == S21_INF_NEG)) {
         result = 1;
     } else if (value_1.type == S21_NORMAL && value_2.type == S21_NORMAL) {
         int sign1 = check_sign(value_1),

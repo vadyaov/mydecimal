@@ -16,11 +16,8 @@ int s21_round(s21_decimal value, s21_decimal *result) {
 
         balance(&point_part, &o5);
 
-        // float pp;
-        // s21_from_decimal_to_float(point_part, &pp);
-        if (simple_greater(point_part, o5) || simple_equal(point_part, o5)/*pp >= 0.5*/) {  // numbers with .5 part after point work bad because of mod or float_to_decimal :(
+        if (simple_greater(point_part, o5) || simple_equal(point_part, o5))
             simple_add(*result, one, result);
-        }
         set_sign(result, sign);
     } else {
         status = FAIL;

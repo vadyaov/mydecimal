@@ -15,3 +15,14 @@ void set_invisible(s21_decimal *dst, int pos);
 int get_bit_string(long double res, char *bits, int exponent);
 void set_bits_from_string(char *bits, s21_decimal *result);
 int integer_part_count(long double num);
+// int get_bit_string(long double res, char *bits, int exponent);
+// void set_bits_from_string(char *bits, s21_decimal *result);
+// int integer_part_count(long double num);
+
+int isBigExp(float exp);
+void set1bit(s21_decimal *dst, int exp);
+int multi10(float *src, int scale);
+int count_int_part(float *src);
+void float_convert(s21_decimal *dst, float *src, int *scale, int exp);
+void put_mantiss_in_decimal(s21_decimal *dst, char *str);
+void put_exp_in_decimal(s21_decimal *dst, int e);
